@@ -1,0 +1,7 @@
+build-*
+BotBuilder*
+.idea*
+cmake-build*
+.DS_Store*
+installers
+*.txt.user
