@@ -220,6 +220,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: divider.bottom
         anchors.top: menuBuild.bottom
+        anchors.topMargin: 8
 
         Rectangle {
             id: lineNumbersContainer
@@ -271,6 +272,8 @@ Rectangle {
                 }
                 onModelChanged: {
                     lineNumbers.contentY = lineNumbers.contentHeight - lineNumbers.height;
+                    if (!code.focus)
+                        flickable.contentY = lineNumbers.contentY
                 }
             }
         }
@@ -280,7 +283,6 @@ Rectangle {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            anchors.topMargin: 8
             color: code.background.color
 
             Flickable {
@@ -333,13 +335,6 @@ Rectangle {
                     }
 
                     onTextChanged: {
-//                        if (errorLine < 0)
-//                            return
-
-//                        var lastIndex = text.length - 1;
-//                        var lastChar = text.charAt(lastIndex);
-//                        if (lastChar === "\n" && code.linePosition === errorLine)
-//                            errorLine++
                         if (errorValue !== "") {
                             var res = code.text.split("\n")
                             for (var i = 0; i < res.length; i++) {
@@ -402,135 +397,6 @@ Rectangle {
             text: logValue
         }
     }
-
-//    Flickable {
-//        id: flickable
-//        flickableDirection: Flickable.VerticalFlick
-
-////        width: parent.width
-//        height: parent.height - menu.height - 8
-//        anchors.top: menu.bottom
-//        anchors.left: parent.left
-//        anchors.right: parent.right
-//        anchors.topMargin: 8
-//        anchors.bottom: scrollView2.top
-
-//        boundsBehavior: Flickable.StopAtBounds
-//        clip: true
-//        ScrollBar.vertical: ScrollBar {
-//            width: 15
-//            active: true
-//            policy: ScrollBar.AlwaysOn
-//        }
-
-//        property int rowHeight: code.font.pixelSize+3
-//        property int marginsTop: 10
-//        property int marginsLeft: 4
-//        property int lineCountWidth: 40
-
-//        Column {
-//            id: lineNumbers
-//            anchors.left: parent.left
-//            anchors.leftMargin: 0//flickable.marginsLeft
-//            anchors.topMargin:   flickable.marginsTop
-//            y:  flickable.marginsTop
-//            width: flickable.lineCountWidth
-
-//            Repeater {
-//                model: code.lineCount
-//                delegate:
-//                Label {
-//                    color: "white"
-//                    font: code.font
-//                    width: parent.width
-//                    horizontalAlignment: Text.AlignRight
-//                    verticalAlignment: Text.AlignVCenter
-//                    height: flickable.rowHeight
-//                    renderType: Text.NativeRendering
-//                    text: index+1
-//                    background: Rectangle {
-//                        color: "#404244"
-//                    }
-//                }
-//            }
-//        }
-//        Rectangle {
-//            y: 4
-//            height: flickable.height
-//            anchors.left: parent.left
-//            anchors.leftMargin: flickable.lineCountWidth + flickable.marginsLeft
-//            width: 1
-//            color: "green"
-//        }
-
-//    TextArea.flickable: TextArea {
-//            id: code
-//            text: ""
-//            textFormat: Qt.PlainText
-//            focus: false
-//            selectByMouse: true
-//            leftPadding: 60
-//            rightPadding: flickable.marginsLeft
-//            topPadding: flickable.marginsTop
-//            bottomPadding: flickable.marginsTop
-//            color: "white"
-
-//            background: Rectangle {
-//                color: "#35373B"
-//                border.width: 1
-//                border.color: "#70FFFFFF"
-//            }
-
-//        }
-//    }
-
-
-//    ScrollView {
-//        id: scrollView2
-//        width: parent.width
-//        height: 200
-//        anchors.bottom:  parent.bottom
-////        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-////        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
-//        ScrollBar.vertical.interactive: true
-//        ScrollBar.horizontal.interactive: true
-//        padding: 0
-
-
-//        TextArea {
-//            width: scrollView2.width - 20
-//            height: scrollView2.height
-//            wrapMode: TextArea.Wrap
-//            topPadding: 8
-//            bottomPadding: 0
-//            leftPadding: 0
-//            readOnly: true
-//            background: Rectangle {
-//                color: "#35373B"
-//                border.width: 1
-//                border.color: "#70FFFFFF"
-//            }
-//            text: logValue
-
-//        }
-//    }
-
-//    Flickable {
-//        id: flickable
-//        flickableDirection: Flickable.VerticalFlick
-//        anchors.fill: parent
-
-//        TextArea.flickable: TextArea {
-//            anchors.fill: parent
-//            textFormat: Qt.RichText
-//            wrapMode: TextArea.Wrap
-//            background: null
-//            padding: 8
-//        }
-
-//        ScrollBar.vertical: ScrollBar {}
-//    }
-
 
 }
 
