@@ -271,9 +271,23 @@ Rectangle {
                     flickable.contentY = contentY
                 }
                 onModelChanged: {
-                    lineNumbers.contentY = lineNumbers.contentHeight - lineNumbers.height;
-                    if (!code.focus)
-                        flickable.contentY = lineNumbers.contentY
+                    if (code.linePosition === 0) {
+                        lineNumbers.contentY = -1
+                        if (!code.focus)
+                            flickable.contentY = lineNumbers.contentY
+                    }
+                    else {
+                        lineNumbers.contentY = flickable.contentY
+                    }
+
+                    //- lineNumbers.height;
+
+//                    lineNumbers.contentY = lineNumbers.contentHeight * code.linePosition;
+//                    console.log("code.linePosition " + code.linePosition)
+//                    console.log("lineNumbers.contentY " + lineNumbers.contentY)
+
+//                    if (!code.focus)
+//                        flickable.contentY = lineNumbers.contentY
                 }
             }
         }
