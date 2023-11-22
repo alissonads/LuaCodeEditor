@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.8.1)
 
 project(LuaCodeEditor VERSION 0.1 LANGUAGES CXX)
 
@@ -15,24 +15,35 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(LUA_DIRECTORY /opt/homebrew/Cellar/lua/5.4.6)
 
 add_subdirectory(external/rapidcsv)
+add_subdirectory(qtimgui)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS
-    Widgets
-    QuickWidgets
-    Core
-    Quick
-    Gui
-    Qml
-    QuickControls2
+        Widgets
+        QuickWidgets
+        Core
+        Quick
+        Gui
+        Qml
+        Charts
+        Svg
+        SvgWidgets
+        OpenGLWidgets
+        #        Network
+        QuickControls2
 )
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS
-    Widgets
-    QuickWidgets
-    Core
-    Quick
-    Gui
-    Qml
-    QuickControls2
+        Widgets
+        QuickWidgets
+        Core
+        Quick
+        Gui
+        Qml
+        Charts
+        Svg
+        SvgWidgets
+        OpenGLWidgets
+        #        Network
+        QuickControls2
 )
 
 set(PROJECT_SOURCES
@@ -41,12 +52,22 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        src/LuaCompilator.cpp src/LuaCompilator.h src/LuaProjectManager.cpp src/LuaProjectManager.h src/FileManager.cpp src/FileManager.h src/Models.cpp src/Models.h src/IntervalParser.cpp src/IntervalParser.h)
-
-
+        src/LuaCompilator.cpp
+        src/LuaCompilator.h
+        src/LuaProjectManager.cpp
+        src/LuaProjectManager.h
+        src/FileManager.cpp
+        src/FileManager.h
+        src/Models.cpp
+        src/Models.h
+        src/IntervalParser.cpp
+        src/IntervalParser.h)
 
 set(INCLUDES
     external/rapidcsv/src
+    qtimgui/src
+    qtimgui/modules/imgui
+    qtimgui/modules/implot
     ${LUA_DIRECTORY}/include
     src
 )
@@ -80,14 +101,19 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 target_link_libraries(LuaCodeEditor PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::QuickWidgets
     Qt${QT_VERSION_MAJOR}::Core
-    Qt${QT_VERSION_MAJOR}::Quick
     Qt${QT_VERSION_MAJOR}::Gui
+    Qt${QT_VERSION_MAJOR}::Quick
     Qt${QT_VERSION_MAJOR}::Qml
+    Qt${QT_VERSION_MAJOR}::QuickWidgets
+    Qt${QT_VERSION_MAJOR}::OpenGLWidgets
+    Qt${QT_VERSION_MAJOR}::Svg
+    Qt${QT_VERSION_MAJOR}::SvgWidgets
+    Qt${QT_VERSION_MAJOR}::Charts
     Qt${QT_VERSION_MAJOR}::QuickControls2
     ${LUA_DIRECTORY}/lib/liblua.a
     rapidcsv
+    qt_imgui_widgets
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

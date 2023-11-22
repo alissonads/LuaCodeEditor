@@ -1,0 +1,3 @@
+[submodule "qtimgui"]
+	path = qtimgui
+	url = git@github.com:The-Broker-App/qtimgui.git
