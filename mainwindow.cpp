@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
     FileManager fileManager;
     auto bytes = fileManager.loadCsv("BTCUSDT-1m-2023-09.csv");
     _luaCompilator->setTickDataList(bytes);
+//    _luaCompilator->setExtraData({ 4, "up" });
 }
 
 MainWindow::~MainWindow()

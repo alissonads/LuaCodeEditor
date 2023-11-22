@@ -6,11 +6,14 @@
 #define LUACODEEDITOR_LUACOMPILATOR_H
 
 #include <QObject>
+#include <QObject>
+#include <QVariant>
 #include <string_view>
 #include <memory>
 
 class lua_State;
 class TickData;
+class TimeValue;
 
 class LuaCompilator : public QObject, public std::enable_shared_from_this<LuaCompilator> {
     Q_OBJECT
@@ -32,6 +35,7 @@ public:
     static int customInput(lua_State* L);
 
     void setTickDataList(const std::vector<TickData>& list);
+    void setExtraData(const QList<QVariant>& extraData);
 
 public slots:
     bool build(const QString& code);
@@ -49,10 +53,15 @@ private:
 
     void pushTickDataListToLua(lua_State* L);
     void pushTickDataToLua(lua_State* L, const TickData& obj);
+    void pushExtraDataToLua(lua_State* L);
+    void toLuaData(const QVariant& data);
+    std::vector<TimeValue> dataOutput();
 
     lua_State* L;
     std::vector<TickData> _tickDataList;
+    QList<QVariant> _extraData;
     static std::shared_ptr<LuaCompilator> _instance;
+    static QString _bytes;
 };
 
 
